@@ -19,8 +19,7 @@ public class MyBot extends TelegramLongPollingBot {
         if (update.hasMessage()) {
             Message message = update.getMessage();
             Long chatID = message.getChatId();
-
-            // Agar xabar video bo'lsa
+            
             if (message.hasVideo()) {
                 String fileId = message.getVideo().getFileId();
                 String videoName = message.getCaption() != null ? message.getCaption() : "Noma'lum video";
@@ -30,13 +29,13 @@ public class MyBot extends TelegramLongPollingBot {
                 return;
             }
 
-            // Agar xabar matn bo'lsa
+            
             if (message.hasText()) {
                 String text = message.getText();
 
-                // Kino ID orqali qidirish
+                
                 try {
-                    int videoId = Integer.parseInt(text); // Xabar ID bo‘lsa, uni raqamga o‘tkazamiz
+                    int videoId = Integer.parseInt(text); 
                     String videoFileId = getVideoByFileId(videoId);
 
                     if (videoFileId != null) {
@@ -46,10 +45,10 @@ public class MyBot extends TelegramLongPollingBot {
                     }
                     return;
                 } catch (NumberFormatException e) {
-                    // Agar raqam emas bo'lsa, nom sifatida qidiramiz
+                    
                 }
 
-                // Kino nomi orqali qidirish
+                
                 String videoFileId = getVideoByName(text);
                 if (videoFileId != null) {
                     sendVideo(chatID, videoFileId);
